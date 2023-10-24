@@ -6,7 +6,7 @@ class Book(models.Model):
     title = models.CharField(max_length=200)
     isbn = models.CharField(max_length=15, blank=True)
     page_count = models.SmallIntegerField()
-    published_date = models.DateTimeField(null=True, blank=True)
+    published_date = models.DateField(null=True, blank=True)
     img = models.URLField(blank=True)
     short_description = models.TextField(max_length=2000, blank=True)
     long_description = models.TextField(max_length=3000, blank=True)

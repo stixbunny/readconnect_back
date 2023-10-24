@@ -78,7 +78,8 @@ def main():
         new_book["fields"]["authors"] = []
         if "authors" in book and len(book["authors"]) > 0:
             for author in book["authors"]:
-                new_book["fields"]["authors"].append(addAuthor(author))
+                if author != "":
+                    new_book["fields"]["authors"].append(addAuthor(author))
         new_book["fields"]["categories"] = []
         if "categories" in book and len(book["categories"]) > 0:
             for category in book["categories"]:
@@ -87,9 +88,7 @@ def main():
             new_book["fields"]["isbn"] = book["isbn"]
         if "publishedDate" in book:
             new_book["fields"]["published_date"] = (
-                datetime.fromisoformat(book["publishedDate"]["$date"])
-                .now()
-                .isoformat()
+                datetime.fromisoformat(book["publishedDate"]["$date"]).date().isoformat()
             )
         if "thumbnailUrl" in book:
             new_book["fields"]["img"] = book["thumbnailUrl"]
