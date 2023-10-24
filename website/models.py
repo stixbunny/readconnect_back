@@ -4,12 +4,12 @@ from django.contrib.auth.models import AbstractUser
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
-    isbn = models.CharField(max_length=15)
+    isbn = models.CharField(max_length=15, blank=True)
     page_count = models.SmallIntegerField()
-    published_date = models.DateTimeField()
-    img = models.URLField()
-    short_description = models.TextField(max_length=2000)
-    long_description = models.TextField(max_length=3000)
+    published_date = models.DateTimeField(null=True, blank=True)
+    img = models.URLField(blank=True)
+    short_description = models.TextField(max_length=2000, blank=True)
+    long_description = models.TextField(max_length=3000, blank=True)
     authors = models.ManyToManyField("Author")
     categories = models.ManyToManyField("Category")
 
