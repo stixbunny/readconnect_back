@@ -10,8 +10,8 @@ class Book(models.Model):
     img = models.URLField(blank=True)
     short_description = models.TextField(max_length=2000, blank=True)
     long_description = models.TextField(max_length=3000, blank=True)
-    authors = models.ManyToManyField("Author")
-    categories = models.ManyToManyField("Category")
+    authors = models.ManyToManyField("Author", related_name="books")
+    categories = models.ManyToManyField("Category", related_name="books")
 
     def __str__(self):
         return self.title
@@ -35,7 +35,7 @@ class User(AbstractUser):
     following = models.ManyToManyField(
         "self", blank=True, related_name="followers", symmetrical=False
     )
-    reviews = models.ManyToManyField(to=Book, through="Review")
+    reviews = models.ManyToManyField(to=Book, through="Review", related_name="reviews")
 
     def __str__(self):
         return self.username
@@ -65,7 +65,7 @@ class Review(models.Model):
 
 class ReadList(models.Model):
     user = models.ForeignKey(to=User, related_name="booksread", on_delete=models.CASCADE)
-    booklist = models.ManyToManyField(to=Book)
+    booklist = models.ManyToManyField(to=Book, related_name="inreadlist")
     
     def __str__(self):
         return f"{self.user.username}'s read list"
@@ -73,7 +73,7 @@ class ReadList(models.Model):
 
 class ToReadList(models.Model):
     user = models.ForeignKey(to=User, related_name="bookstoread", on_delete=models.CASCADE)
-    booklist = models.ManyToManyField(to=Book)
+    booklist = models.ManyToManyField(to=Book, related_name="intoreadlist")
     
     def __str__(self):
         return f"{self.user.username}'s to read list"
