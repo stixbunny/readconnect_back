@@ -63,7 +63,7 @@ class Review(models.Model):
         return f"{self.user.username} - {self.book.title}"
 
 
-class ReadList:
+class ReadList(models.Model):
     user = models.ForeignKey(to=User, related_name="booksread", on_delete=models.CASCADE)
     booklist = models.ManyToManyField(to=Book)
     
@@ -71,7 +71,7 @@ class ReadList:
         return f"{self.user.username}'s read list"
 
 
-class ToReadList:
+class ToReadList(models.Model):
     user = models.ForeignKey(to=User, related_name="bookstoread", on_delete=models.CASCADE)
     booklist = models.ManyToManyField(to=Book)
     
