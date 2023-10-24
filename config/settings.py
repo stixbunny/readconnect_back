@@ -177,4 +177,4 @@ AUTH_USER_MODEL = "website.User"
 # Graphene
 # https://docs.graphene-python.org/projects/django/en/latest/installation/
 
-GRAPHENE = {"SCHEMA": "website.schema.schema"}
+GRAPHENE = {"SCHEMA": "config.schema.schema"}
