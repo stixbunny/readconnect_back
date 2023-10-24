@@ -9,7 +9,7 @@ categories = []
 
 
 def contains(list, name):
-    result = [member for member in list if member["name"] == name]
+    result = [member for member in list if member["fields"]["name"] == name]
     if result:
         return result[0]["pk"]
     else:
@@ -33,7 +33,8 @@ def newAuthor(name):
     author = {}
     author["model"] = "website.author"
     author["pk"] = authors_id
-    author["name"] = name
+    author["fields"] = {}
+    author["fields"]["name"] = name
     authors_id += 1
     return author
 
@@ -55,7 +56,8 @@ def newCategory(name):
     category = {}
     category["model"] = "website.category"
     category["pk"] = categories_id
-    category["name"] = name
+    category["fields"] = {}
+    category["fields"]["name"] = name
     categories_id += 1
     return category
 
@@ -70,30 +72,31 @@ def main():
         new_book = {}
         new_book["model"] = "website.book"
         new_book["pk"] = id
-        new_book["title"] = book["title"]
-        new_book["page_count"] = book["pageCount"]
-        new_book["authors"] = []
+        new_book["fields"] = {}
+        new_book["fields"]["title"] = book["title"]
+        new_book["fields"]["page_count"] = book["pageCount"]
+        new_book["fields"]["authors"] = []
         if "authors" in book and len(book["authors"]) > 0:
             for author in book["authors"]:
-                new_book["authors"].append(addAuthor(author))
-        new_book["categories"] = []
+                new_book["fields"]["authors"].append(addAuthor(author))
+        new_book["fields"]["categories"] = []
         if "categories" in book and len(book["categories"]) > 0:
             for category in book["categories"]:
-                new_book["categories"].append(addCategory(category))
+                new_book["fields"]["categories"].append(addCategory(category))
         if "isbn" in book:
-            new_book["isbn"] = book["isbn"]
+            new_book["fields"]["isbn"] = book["isbn"]
         if "publishedDate" in book:
-            new_book["published_date"] = (
+            new_book["fields"]["published_date"] = (
                 datetime.fromisoformat(book["publishedDate"]["$date"])
                 .now()
                 .isoformat()
             )
         if "thumbnailUrl" in book:
-            new_book["img"] = book["thumbnailUrl"]
+            new_book["fields"]["img"] = book["thumbnailUrl"]
         if "shortDescription" in book:
-            new_book["short_description"] = book["shortDescription"]
+            new_book["fields"]["short_description"] = book["shortDescription"]
         if "longDescription" in book:
-            new_book["long_description"] = book["longDescription"]
+            new_book["fields"]["long_description"] = book["longDescription"]
         new_books.append(new_book)
     json_objects = (
         [author for author in authors]
